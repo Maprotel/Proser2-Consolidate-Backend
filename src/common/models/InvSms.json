@@ -1,0 +1,43 @@
+{
+  "name": "InvSms",
+  "settings": {
+    "strict": false,
+    "forceId": false,
+    "replaceOnPUT": true,
+    "idInjection": false,
+    "mysql": {
+      "schema": "system_proser",
+      "table": "InvSms"
+    }
+  },
+  "properties": {
+    "inv_sms_id": {
+      "type": "number",
+      "id": true
+    },
+    "inv_sms_status": {
+      "type": "string"
+    },
+    "inv_sms_chk": {
+      "type": "number"
+    },
+    "inv_sms_name": {
+      "type": "string"
+    },
+    "inv_sms_date": {
+      "type": "string"
+    },
+    "inv_sms_time": {
+      "type": "string"
+    },
+    "inv_sms_msg": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    
+  ],
+  "methods": {}
+}
