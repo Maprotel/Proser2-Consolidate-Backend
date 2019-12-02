@@ -137,7 +137,7 @@ ${arrayToSqlQuery( userSelection.campaign, "callentry_campaign_id" ) }
 
 
   try {
-    let resultPre = await pool.destinyReportsEmergencia.query( query );
+    let resultPre = await pool.reportsEmergencia.query( query );
     result = resultPre;
   } catch ( error ) {
     result = { error: error };
@@ -251,7 +251,7 @@ ${arrayToSqlQuery( userSelection.campaign, "callentry_campaign_id" ) }
 
 
   try {
-    let resultPre = await pool.destinyReportsAps.query( query );
+    let resultPre = await pool.reportsAps.query( query );
     result = resultPre;
   } catch ( error ) {
     result = { error: error };
@@ -365,7 +365,7 @@ ${arrayToSqlQuery( userSelection.campaign, "callentry_campaign_id" ) }
 
 
   try {
-    let resultPre = await pool.destinyReportsAmd.query( query );
+    let resultPre = await poolmd.query( query );
     result = resultPre;
   } catch ( error ) {
     result = { error: error };

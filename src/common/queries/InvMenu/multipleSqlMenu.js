@@ -2,31 +2,31 @@ import * as pool from "../../../connectors/pool";
 import moment from "moment";
 import objectDateToTextDate from "../../functions/dateFunctions";
 
-async function multipleSqlMenu(userSelection) {
+async function multipleSqlMenu ( userSelection ) {
   let result = {};
   let resume_error = false;
 
-  async function queryCalendarDayFunction(userSelection) {
+  async function queryCalendarDayFunction ( userSelection ) {
     let query = `
       SELECT
       *
       FROM
       InvCalendarDay
       WHERE
-      inv_calendarday_date = '${userSelection.start_date}'
+      inv_calendarday_date = '${userSelection.start_date }'
 
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryCalendarDayFunction " + error };
     }
   }
 
-  async function queryMenuClientFunction(userSelection) {
+  async function queryMenuClientFunction ( userSelection ) {
     let query = `
 
         SELECT DISTINCT
@@ -38,7 +38,7 @@ async function multipleSqlMenu(userSelection) {
       ON  cdr_queue_id = inv_queue_id
 
       WHERE
-      (cdr_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}')
+      (cdr_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }')
       
       GROUP BY
         inv_client_id
@@ -46,15 +46,15 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuClientFunction " + error };
     }
   }
 
-  async function queryMenuQueueFunction(userSelection) {
+  async function queryMenuQueueFunction ( userSelection ) {
     let query = `
 
     SELECT DISTINCT
@@ -67,21 +67,21 @@ async function multipleSqlMenu(userSelection) {
       ON cdr_queue_id = inv_queue_id
     
     WHERE
-      (cdr_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}')
+      (cdr_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }')
       GROUP BY inv_queue_number
   
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuQueueFunction " + error };
     }
   }
 
-  async function queryMenuServiceFunction(userSelection) {
+  async function queryMenuServiceFunction ( userSelection ) {
     let query = `
 
     SELECT DISTINCT
@@ -94,21 +94,21 @@ async function multipleSqlMenu(userSelection) {
       ON cdr_queue_id = inv_queue_id
     
     WHERE
-      (cdr_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}')
+      (cdr_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }')
 
       GROUP BY inv_service_id
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuServiceFunction " + error };
     }
   }
 
-  async function queryMenuCampaignFunction(userSelection) {
+  async function queryMenuCampaignFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -117,22 +117,22 @@ async function multipleSqlMenu(userSelection) {
 
     FROM
     InvCampaign
-    WHERE  (inv_campaign_start_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}')
+    WHERE  (inv_campaign_start_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }')
 
 
   
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuCampaignFunction " + error };
     }
   }
 
-  async function queryMenuSupervisorFunction(userSelection) {
+  async function queryMenuSupervisorFunction ( userSelection ) {
     let query = `
 
     SELECT DISTINCT
@@ -149,16 +149,16 @@ async function multipleSqlMenu(userSelection) {
       ON JSON_UNQUOTE(JSON_EXTRACT(hca_agent_people_json, "$[0].id") ) as hca_agent_supervisor_id = inv_supervisor_id
     
     WHERE
-      audit_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}'
+      audit_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }'
 
 
   
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return {
         error: "multipleSqlMenu - queryMenuSupervisorFunction " + error
@@ -166,7 +166,7 @@ async function multipleSqlMenu(userSelection) {
     }
   }
 
-  async function queryMenuAgentFunction(userSelection) {
+  async function queryMenuAgentFunction ( userSelection ) {
     let query = `
 
     SELECT DISTINCT
@@ -181,20 +181,20 @@ async function multipleSqlMenu(userSelection) {
         
       WHERE
 
-        audit_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}'
+        audit_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }'
 
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuAgentFunction " + error };
     }
   }
 
-  async function queryMenuScheduleFunction(userSelection) {
+  async function queryMenuScheduleFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -212,15 +212,15 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuScheduleFunction " + error };
     }
   }
 
-  async function queryMenuAuxiliarFunction(userSelection) {
+  async function queryMenuAuxiliarFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -233,7 +233,7 @@ async function multipleSqlMenu(userSelection) {
       break.inv_break_id = audit_break_id
 
       WHERE
-      audit.audit_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}'
+      audit.audit_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }'
       AND
       break.inv_break_productivity is null or break.inv_break_productivity <> 1
 
@@ -242,15 +242,15 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuAuxiliarFunction " + error };
     }
   }
 
-  async function queryMenuAsignationFunction(userSelection) {
+  async function queryMenuAssignationFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -264,7 +264,7 @@ async function multipleSqlMenu(userSelection) {
       break.inv_break_id = audit_break_id
 
       WHERE
-      audit.audit_date BETWEEN '${userSelection.start_date}' AND '${userSelection.end_date}'
+      audit.audit_date BETWEEN '${userSelection.start_date }' AND '${ userSelection.end_date }'
       AND
       break.inv_break_productivity = 1
 
@@ -273,17 +273,17 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return {
-        error: "multipleSqlMenu - queryMenuAsignationFunction " + error
+        error: "multipleSqlMenu - queryMenuAssignationFunction " + error
       };
     }
   }
 
-  async function queryMenuReportLinesFunction(userSelection) {
+  async function queryMenuReportLinesFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -297,9 +297,9 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return {
         error: "multipleSqlMenu - queryMenuReportLinesFunction " + error
@@ -307,7 +307,7 @@ async function multipleSqlMenu(userSelection) {
     }
   }
 
-  async function queryMenuHourFunction(userSelection) {
+  async function queryMenuHourFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -321,15 +321,15 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuHourFunction " + error };
     }
   }
 
-  async function queryMenuIntervalFunction(userSelection) {
+  async function queryMenuIntervalFunction ( userSelection ) {
     let query = `
 
     SELECT
@@ -343,9 +343,9 @@ async function multipleSqlMenu(userSelection) {
           `;
 
     try {
-      const result = await pool.destinyReports.query(query);
+      const result = await pool.destinyConsolidate.query( query );
       return result;
-    } catch (error) {
+    } catch ( error ) {
       resume_error = true;
       return { error: "multipleSqlMenu - queryMenuIntervalFunction " + error };
     }
@@ -353,21 +353,21 @@ async function multipleSqlMenu(userSelection) {
 
   // [{id: 12, name: 'Año nuevo'}];//
 
-  let queryCalendarDay = await queryCalendarDayFunction(userSelection);
+  let queryCalendarDay = await queryCalendarDayFunction( userSelection );
 
-  let queryMenuClient = await queryMenuClientFunction(userSelection);
-  let queryMenuQueue = await queryMenuQueueFunction(userSelection);
-  let queryMenuService = await queryMenuServiceFunction(userSelection);
-  let queryMenuCampaign = await queryMenuCampaignFunction(userSelection);
-  let queryMenuSupervisor = await queryMenuSupervisorFunction(userSelection);
-  let queryMenuAgent = await queryMenuAgentFunction(userSelection);
-  let queryMenuSchedule = await queryMenuScheduleFunction(userSelection);
-  let queryMenuAuxiliar = await queryMenuAuxiliarFunction(userSelection);
-  let queryMenuAsignation = await queryMenuAsignationFunction(userSelection);
+  let queryMenuClient = await queryMenuClientFunction( userSelection );
+  let queryMenuQueue = await queryMenuQueueFunction( userSelection );
+  let queryMenuService = await queryMenuServiceFunction( userSelection );
+  let queryMenuCampaign = await queryMenuCampaignFunction( userSelection );
+  let queryMenuSupervisor = await queryMenuSupervisorFunction( userSelection );
+  let queryMenuAgent = await queryMenuAgentFunction( userSelection );
+  let queryMenuSchedule = await queryMenuScheduleFunction( userSelection );
+  let queryMenuAuxiliar = await queryMenuAuxiliarFunction( userSelection );
+  let queryMenuAssignation = await queryMenuAssignationFunction( userSelection );
 
-  let queryMenuReportLines = await queryMenuReportLinesFunction(userSelection);
-  let queryMenuHour = await queryMenuHourFunction(userSelection);
-  let queryMenuInterval = await queryMenuIntervalFunction(userSelection);
+  let queryMenuReportLines = await queryMenuReportLinesFunction( userSelection );
+  let queryMenuHour = await queryMenuHourFunction( userSelection );
+  let queryMenuInterval = await queryMenuIntervalFunction( userSelection );
 
   result = {
     dashboardType: userSelection.dashboardType,
@@ -403,7 +403,7 @@ async function multipleSqlMenu(userSelection) {
     schedule: queryMenuSchedule,
 
     auxiliar: queryMenuAuxiliar,
-    assignation: queryMenuAsignation,
+    assignation: queryMenuAssignation,
 
     groupBy: userSelection.groupBy,
     orderBy: userSelection.orderBy,
@@ -412,7 +412,7 @@ async function multipleSqlMenu(userSelection) {
     break_class: userSelection.break_class
   };
 
-  if (!resume_error) {
+  if ( !resume_error ) {
     return result;
   } else {
     return { error: result };

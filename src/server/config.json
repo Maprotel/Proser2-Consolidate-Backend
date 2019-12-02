@@ -1,7 +1,7 @@
 {
   "restApiRoot": "/api",
   "host": "0.0.0.0",
-  "port": 3153,
+  "port": 3161,
   "legacyExplorer": false,
   "remoting": {
     "context": false,

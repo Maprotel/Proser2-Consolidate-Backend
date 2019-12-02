@@ -74,46 +74,47 @@ app.start = function () {
       );
       console.log( "System Proser by Maprotel", version );
       console.log( "Environment: ", chalk.hex( "#E5E510" )( process.env.NODE_ENV ) );
-
+      console.log( " " );
       console.log(
         "consolidateHost: ",
-        chalk.hex( "#E5E510" )( process.env.REPORTS_DB_HOST )
+        chalk.hex( "#E5E510" )( process.env.CONSOLIDATE_DB_HOST )
       );
 
       console.log(
         "consolidateDatabase ",
-        chalk.hex( "#E5E510" )( process.env.PROSER_REPORTS_DATABASE )
+        chalk.hex( "#E5E510" )( process.env.CONSOLIDATE_DATABASE )
       );
 
-
+      console.log( " " );
       console.log(
-        "destinyReportsEmergencia: ",
-        chalk.hex( "#E5E510" )( '172.20.1.46' )
+        "reportsEmergencia: ",
+        chalk.hex( "#E5E510" )( process.env.REPORTS_HOST_EMERGENCIA )
       );
       console.log(
-        "destinyReportsAps: ",
-        chalk.hex( "#E5E510" )( '172.20.1.239' )
+        "reportsAps: ",
+        chalk.hex( "#E5E510" )( process.env.REPORTS_HOST_APS )
       );
       console.log(
-        "destinyReportsAmd: ",
-        chalk.hex( "#E5E510" )( '172.20.1.229' )
-      );
-
-
-      console.log(
-        "destinyCallCenterEmergencia: ",
-        chalk.hex( "#E5E510" )( '172.20.0.235' )
-      );
-      console.log(
-        "destinyCallCenterAps: ",
-        chalk.hex( "#E5E510" )( '172.20.0.239' )
-      );
-      console.log(
-        "destinyCallCenterAmd: ",
-        chalk.hex( "#E5E510" )( '172.20.0.234' )
+        "reportsAmd: ",
+        chalk.hex( "#E5E510" )( process.env.REPORTS_HOST_AMD )
       );
 
+      console.log( " " );
 
+      console.log(
+        "callCenterEmergencia: ",
+        chalk.hex( "#E5E510" )( process.env.CALLCENTER_HOST_EMERGENCIA )
+      );
+      console.log(
+        "callCenterAps: ",
+        chalk.hex( "#E5E510" )( process.env.CALLCENTER_HOST_APS )
+      );
+      console.log(
+        "callCenterAmd: ",
+        chalk.hex( "#E5E510" )( process.env.CALLCENTER_HOST_AMD )
+      );
+
+      console.log( " " );
 
       console.log( "Browse your REST API at %s%s", baseUrl, explorerPath );
       console.log( "" );

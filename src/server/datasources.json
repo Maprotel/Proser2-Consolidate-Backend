@@ -7,10 +7,10 @@
     "host": "${INVENTORY_DB_HOST}",
     "port": 3306,
     "url": "",
-    "database": "${PROSER_INVENTORY_DATABASE}",
-    "password": "${INVENTORY_DB_PASSWORD_WRITE}",
+    "database": "${CONSOLIDATE_DATABASE}",
+    "password": "${CONSOLIDATE_DB_PASSWORD}",
     "name": "proserConsolidate",
-    "user": "${INVENTORY_DB_USER_WRITE}",
+    "user": "${CONSOLIDATE_DB_USER}",
     "connector": "mysql",
     "connectTimeout": 30000,
     "acquireTimeout": 20000
