@@ -9,7 +9,7 @@ const mysql = require( `mysql` );
 
 // REPORTS
 const destinyConsolidate = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
@@ -24,14 +24,14 @@ const destinyConsolidate = mysql.createPool( {
 
 // REPORTS EMERGENCIA
 const reportsEmergencia = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host:  process.env.REPORTS_HOST_EMERGENCIA,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
-  database: process.env.REPORTS_HOST_EMERGENCIA,
+  database: process.env.REPORTS_DB_EMERGENCIA,
   multipleStatements: true,
   max_statement_time: 20,
   connectionName: "reportsEmergencia"
@@ -39,14 +39,14 @@ const reportsEmergencia = mysql.createPool( {
 
 // REPORTS APS
 const reportsAps = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host:  process.env.REPORTS_HOST_APS,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
-  database:  process.env.REPORTS_DB__APS,
+  database:  process.env.REPORTS_DB_APS,
   multipleStatements: true,
   max_statement_time: 20,
   connectionName: "reportsAps"
@@ -54,14 +54,14 @@ const reportsAps = mysql.createPool( {
 
 // REPORTS AMD
 const reportsAmd = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host:  process.env.REPORTS_HOST_AMD,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
-  database: process.env.REPORTS_DB__AMD,
+  database: process.env.REPORTS_DB_AMD,
   multipleStatements: true,
   max_statement_time: 20,
   connectionName: "reportsAmd"
@@ -69,7 +69,7 @@ const reportsAmd = mysql.createPool( {
 
 // CALL CENTER EMERGENCIA
 const callCenterEmergencia = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
@@ -84,7 +84,7 @@ const callCenterEmergencia = mysql.createPool( {
 
 // CALL CENTER APS
 const callCenterAps = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
@@ -99,7 +99,7 @@ const callCenterAps = mysql.createPool( {
 
 // CALL CENTER AMD
 const callCenterAmd = mysql.createPool( {
-  connectionLimit: 1000,
+  connectionLimit: 100,
   connectTimeout: 60 * 60 * 1000,
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
@@ -114,7 +114,7 @@ const callCenterAmd = mysql.createPool( {
 
 // ORIGIN
 // const origin = mysql.createPool( {
-//   connectionLimit: 1000,
+//   connectionLimit: 100,
 //   connectTimeout: 60 * 60 * 1000,
 //   acquireTimeout: 60 * 60 * 1000,
 //   timeout: 60 * 60 * 1000,
@@ -131,7 +131,7 @@ const callCenterAmd = mysql.createPool( {
 
 // REPORTS
 // const originInventory = mysql.createPool( {
-//   connectionLimit: 1000,
+//   connectionLimit: 100,
 //   connectTimeout: 60 * 60 * 1000,
 //   acquireTimeout: 60 * 60 * 1000,
 //   timeout: 60 * 60 * 1000,
