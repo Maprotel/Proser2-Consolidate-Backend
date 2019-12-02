@@ -40,10 +40,7 @@ async function queryCallEntryEmergencia ( userSelection ) {
 
 
   let query = await queryMainCallEntry( userSelection, 'EMERGENCIA' )
-
-  // console.log( 'EMERGENCIA', pool.reportsEmergencia );
-  // console.log( objectDateToTextDate( userSelection.start_date ) );
-  // console.log( objectDateToTextDate( userSelection.end_date ) );
+  // console.log( 'query', query );
 
 
   try {
