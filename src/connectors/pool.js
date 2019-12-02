@@ -29,8 +29,8 @@ const destinyReportsEmergencia = mysql.createPool({
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host: '172.20.1.46',
-  user: 'readmaprotel',
-  password: 'M4pr0t3l',
+  user: process.env.READ_ONLY_USER,
+  password: process.env.READ_ONLY_PASSWORD,
   database: 'proser_rep_hmo_emergencia',
   multipleStatements: true,
   max_statement_time: 20,
@@ -44,8 +44,8 @@ const destinyReportsAps = mysql.createPool({
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host: '172.20.1.239',
-  user: 'readmaprotel',
-  password: 'M4pr0t3l',
+  user: process.env.READ_ONLY_USER,
+  password: process.env.READ_ONLY_PASSWORD,
   database: 'proser_rep_hmo_aps',
   multipleStatements: true,
   max_statement_time: 20,
@@ -59,8 +59,8 @@ const destinyReportsAmd = mysql.createPool({
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host: '172.20.1.229',
-  user: 'readmaprotel',
-  password: 'M4pr0t3l',
+  user: process.env.READ_ONLY_USER,
+  password: process.env.READ_ONLY_PASSWORD,
   database: 'proser_rep_hmo_amd',
   multipleStatements: true,
   max_statement_time: 20,
@@ -74,8 +74,8 @@ const destinyCallCenterEmergencia = mysql.createPool({
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host: '172.20.0.235',
-  user: 'readmaprotel',
-  password: 'M4pr0t3l',
+  user: process.env.READ_ONLY_USER,
+  password: process.env.READ_ONLY_PASSWORD,
   database: 'call_center',
   multipleStatements: true,
   max_statement_time: 20,
@@ -89,8 +89,8 @@ const destinyCallCenterAps = mysql.createPool({
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host: '172.20.0.239',
-  user: 'readmaprotel',
-  password: 'M4pr0t3l',
+  user: process.env.READ_ONLY_USER,
+  password: process.env.READ_ONLY_PASSWORD,
   database: 'call_center',
   multipleStatements: true,
   max_statement_time: 20,
@@ -104,8 +104,8 @@ const destinyCallCenterAmd = mysql.createPool({
   acquireTimeout: 60 * 60 * 1000,
   timeout: 60 * 60 * 1000,
   host: '172.20.0.234',
-  user: 'readmaprotel',
-  password: 'M4pr0t3l',
+  user: process.env.READ_ONLY_USER,
+  password: process.env.READ_ONLY_PASSWORD,
   database: 'call_center',
   multipleStatements: true,
   max_statement_time: 20,
@@ -360,12 +360,15 @@ originInventory.getConnection((err, connection) => {
 // Promisify for Node.js async/await.
 origin.query = util.promisify(origin.query);
 destinyReports.query = util.promisify(destinyReports.query);
+
 destinyReportsEmergencia.query = util.promisify(destinyReportsEmergencia.query);
 destinyReportsAps.query = util.promisify(destinyReportsAps.query);
 destinyReportsAmd.query = util.promisify(destinyReportsAmd.query);
+
 destinyCallCenterEmergencia.query = util.promisify(destinyCallCenterEmergencia.query);
 destinyCallCenterAps.query = util.promisify(destinyCallCenterAps.query);
 destinyCallCenterAmd.query = util.promisify(destinyCallCenterAmd.query);
+
 destinyInventory.query = util.promisify(destinyInventory.query);
 originInventory.query = util.promisify(originInventory.query);
 

@@ -15,11 +15,11 @@ import {
 
 /******************************************************************** */
 
-export async function mainCallEntryReport(userSelection) {
+export async function mainCallEntryReport ( userSelection ) {
   let array = [];
-  let CallEntryEmergencia = await queryCallEntryEmergencia(userSelection);
-  let CallEntryAps = await queryCallEntryAps(userSelection);
-  let CallEntryAmd = await queryCallEntryAmd(userSelection);
+  let CallEntryEmergencia = await queryCallEntryEmergencia( userSelection );
+  let CallEntryAps = await queryCallEntryAps( userSelection );
+  let CallEntryAmd = await queryCallEntryAmd( userSelection );
 
   let result = _.concat(
     array,
@@ -33,10 +33,10 @@ export async function mainCallEntryReport(userSelection) {
 }
 
 
-async function queryCallEntryEmergencia (userSelection){
+async function queryCallEntryEmergencia ( userSelection ) {
 
   let result = "";
- 
+
 
   let query = `
 -- ---------------------------------------------------------------
@@ -44,6 +44,8 @@ async function queryCallEntryEmergencia (userSelection){
 SELECT 
 
 'Emergencia' as call_center
+, 'Entrante' as tipo_llamada
+, IF(callentry_agent_id is not null, 'Atendida', 'Abandonada') as final_status
 
 ,  callentry_id as id
   
@@ -102,31 +104,31 @@ ON callentry_queue_id = inv_queue_id
 WHERE 1
 
 -- TIME AND DATE
-${dateAndTimeSqlQuery(userSelection, "callentry_datetime_entry_queue")}
+${dateAndTimeSqlQuery( userSelection, "callentry_datetime_entry_queue" ) }
 
 -- AGENT
-${arrayToSqlQuery(userSelection.agent, "callentry_agent_id")}
+${arrayToSqlQuery( userSelection.agent, "callentry_agent_id" ) }
 
 -- SUPERVISOR
-${objectToJsonSqlQuery(userSelection.supervisor, "callentry_people_json", "supervisor")}
+${objectToJsonSqlQuery( userSelection.supervisor, "callentry_people_json", "supervisor" ) }
 
 -- SCHEDULE
-${objectToJsonSqlQuery(userSelection.client, "callentry_time_json", "schedule")}
+${objectToJsonSqlQuery( userSelection.client, "callentry_time_json", "schedule" ) }
 
 -- ROLE
-${objectToJsonSqlQuery(userSelection.client, "callentry_people_json", "role")}
+${objectToJsonSqlQuery( userSelection.client, "callentry_people_json", "role" ) }
 
 -- CLIENT
-${arrayToJsonSqlQuery(userSelection.client, "callentry_operation_json", "client")}
+${arrayToJsonSqlQuery( userSelection.client, "callentry_operation_json", "client" ) }
 
 -- QUEUE
-${arrayToSqlQuery(userSelection.queue, "callentry_queue_id")}
+${arrayToSqlQuery( userSelection.queue, "callentry_queue_id" ) }
 
 -- SERVICE
-${arrayToJsonSqlQuery(userSelection.service, "callentry_operation_json", "service")}
+${arrayToJsonSqlQuery( userSelection.service, "callentry_operation_json", "service" ) }
 
 -- CAMPAIGN
-${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
+${arrayToSqlQuery( userSelection.campaign, "callentry_campaign_id" ) }
 
 
 -- ---------------------------------------------------------------
@@ -135,9 +137,9 @@ ${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
 
 
   try {
-    let resultPre = await pool.destinyReportsEmergencia.query(query);
+    let resultPre = await pool.destinyReportsEmergencia.query( query );
     result = resultPre;
-  } catch (error) {
+  } catch ( error ) {
     result = { error: error };
   }
 
@@ -145,17 +147,19 @@ ${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
 }
 
 
-async function queryCallEntryAps (userSelection){
+async function queryCallEntryAps ( userSelection ) {
 
   let result = "";
- 
+
 
   let query = `
 -- ---------------------------------------------------------------
 -- FIELDS
 SELECT 
 
-'APS' as call_center
+IF(inv_queue_number = '4001', 'FARMACIA','A.P.S.') as call_center
+, 'Entrante' as tipo_llamada
+, IF(callentry_agent_id is not null, 'Atendida', 'Abandonada') as final_status
 
 ,  callentry_id as id
   
@@ -214,31 +218,31 @@ ON callentry_queue_id = inv_queue_id
 WHERE 1
 
 -- TIME AND DATE
-${dateAndTimeSqlQuery(userSelection, "callentry_datetime_entry_queue")}
+${dateAndTimeSqlQuery( userSelection, "callentry_datetime_entry_queue" ) }
 
 -- AGENT
-${arrayToSqlQuery(userSelection.agent, "callentry_agent_id")}
+${arrayToSqlQuery( userSelection.agent, "callentry_agent_id" ) }
 
 -- SUPERVISOR
-${objectToJsonSqlQuery(userSelection.supervisor, "callentry_people_json", "supervisor")}
+${objectToJsonSqlQuery( userSelection.supervisor, "callentry_people_json", "supervisor" ) }
 
 -- SCHEDULE
-${objectToJsonSqlQuery(userSelection.client, "callentry_time_json", "schedule")}
+${objectToJsonSqlQuery( userSelection.client, "callentry_time_json", "schedule" ) }
 
 -- ROLE
-${objectToJsonSqlQuery(userSelection.client, "callentry_people_json", "role")}
+${objectToJsonSqlQuery( userSelection.client, "callentry_people_json", "role" ) }
 
 -- CLIENT
-${arrayToJsonSqlQuery(userSelection.client, "callentry_operation_json", "client")}
+${arrayToJsonSqlQuery( userSelection.client, "callentry_operation_json", "client" ) }
 
 -- QUEUE
-${arrayToSqlQuery(userSelection.queue, "callentry_queue_id")}
+${arrayToSqlQuery( userSelection.queue, "callentry_queue_id" ) }
 
 -- SERVICE
-${arrayToJsonSqlQuery(userSelection.service, "callentry_operation_json", "service")}
+${arrayToJsonSqlQuery( userSelection.service, "callentry_operation_json", "service" ) }
 
 -- CAMPAIGN
-${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
+${arrayToSqlQuery( userSelection.campaign, "callentry_campaign_id" ) }
 
 
 -- ---------------------------------------------------------------
@@ -247,9 +251,9 @@ ${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
 
 
   try {
-    let resultPre = await pool.destinyReportsAps.query(query);
+    let resultPre = await pool.destinyReportsAps.query( query );
     result = resultPre;
-  } catch (error) {
+  } catch ( error ) {
     result = { error: error };
   }
 
@@ -257,10 +261,10 @@ ${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
 }
 
 
-async function queryCallEntryAmd (userSelection){
+async function queryCallEntryAmd ( userSelection ) {
 
   let result = "";
- 
+
 
   let query = `
 -- ---------------------------------------------------------------
@@ -268,6 +272,8 @@ async function queryCallEntryAmd (userSelection){
 SELECT 
 
 'AMD' as call_center
+, 'Entrante' as tipo_llamada
+, IF(callentry_agent_id is not null, 'Atendida', 'Abandonada') as final_status
 
 ,  callentry_id as id
   
@@ -326,31 +332,31 @@ ON callentry_queue_id = inv_queue_id
 WHERE 1
 
 -- TIME AND DATE
-${dateAndTimeSqlQuery(userSelection, "callentry_datetime_entry_queue")}
+${dateAndTimeSqlQuery( userSelection, "callentry_datetime_entry_queue" ) }
 
 -- AGENT
-${arrayToSqlQuery(userSelection.agent, "callentry_agent_id")}
+${arrayToSqlQuery( userSelection.agent, "callentry_agent_id" ) }
 
 -- SUPERVISOR
-${objectToJsonSqlQuery(userSelection.supervisor, "callentry_people_json", "supervisor")}
+${objectToJsonSqlQuery( userSelection.supervisor, "callentry_people_json", "supervisor" ) }
 
 -- SCHEDULE
-${objectToJsonSqlQuery(userSelection.client, "callentry_time_json", "schedule")}
+${objectToJsonSqlQuery( userSelection.client, "callentry_time_json", "schedule" ) }
 
 -- ROLE
-${objectToJsonSqlQuery(userSelection.client, "callentry_people_json", "role")}
+${objectToJsonSqlQuery( userSelection.client, "callentry_people_json", "role" ) }
 
 -- CLIENT
-${arrayToJsonSqlQuery(userSelection.client, "callentry_operation_json", "client")}
+${arrayToJsonSqlQuery( userSelection.client, "callentry_operation_json", "client" ) }
 
 -- QUEUE
-${arrayToSqlQuery(userSelection.queue, "callentry_queue_id")}
+${arrayToSqlQuery( userSelection.queue, "callentry_queue_id" ) }
 
 -- SERVICE
-${arrayToJsonSqlQuery(userSelection.service, "callentry_operation_json", "service")}
+${arrayToJsonSqlQuery( userSelection.service, "callentry_operation_json", "service" ) }
 
 -- CAMPAIGN
-${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
+${arrayToSqlQuery( userSelection.campaign, "callentry_campaign_id" ) }
 
 
 -- ---------------------------------------------------------------
@@ -359,9 +365,9 @@ ${arrayToSqlQuery(userSelection.campaign, "callentry_campaign_id")}
 
 
   try {
-    let resultPre = await pool.destinyReportsAmd.query(query);
+    let resultPre = await pool.destinyReportsAmd.query( query );
     result = resultPre;
-  } catch (error) {
+  } catch ( error ) {
     result = { error: error };
   }
 

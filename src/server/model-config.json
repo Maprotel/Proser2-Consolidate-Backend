@@ -8,34 +8,38 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "proserConsolidate",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "proserConsolidate",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "proserConsolidate",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "proserConsolidate",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "proserConsolidate",
     "public": false
   },
   "Userbase": {
-    "dataSource": "db",
-    "public": false,
+    "dataSource": "proserConsolidate",
+    "public": true,
     "options": {
       "emailVerificationRequired": false
     }
   },
   "InvReport": {
-    "dataSource": "db",
+    "dataSource": "proserConsolidate",
+    "public": true
+  },
+  "InvMenu": {
+    "dataSource": "proserConsolidate",
     "public": true
   }
 }

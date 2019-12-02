@@ -7,7 +7,6 @@ import * as auditCallEntry from "../queries/InvReport/audit/auditCallEntry";
 
 module.exports = function ( InvReport ) {
 
-
   //**********************REMOTE METHOD CALLENTRY REPORT**********************/
 
   InvReport.mainCallEntryReport = async function ( userSelection ) {
