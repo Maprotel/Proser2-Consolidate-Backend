@@ -14,7 +14,7 @@ import {
 
 import {
   objectDateToTextDate
-} from '../../../functions/dateFunctions'
+} from '../../../functions/dateFunctions';
 
 /******************************************************************** */
 
@@ -49,7 +49,7 @@ async function queryReportsEmergencia ( userSelection ) {
   let result = "";
 
 
-  let query = await queryReports( userSelection, 'EMERGENCIA-REPORTS' )
+  let query = await queryReports( userSelection, 'EMERGENCIA-REPORTS' );
   // console.log( 'query', query );
 
 
@@ -68,7 +68,7 @@ async function queryReportsAps ( userSelection ) {
   let result = "";
 
 
-  let query = await queryReports( userSelection, 'APS-REPORTS' )
+  let query = await queryReports( userSelection, 'APS-REPORTS' );
 
 
   try {
@@ -86,7 +86,7 @@ async function queryReportsAmd ( userSelection ) {
   let result = "";
 
 
-  let query = await queryReports( userSelection, 'AMD-REPORTS' )
+  let query = await queryReports( userSelection, 'AMD-REPORTS' );
 
 
   try {
@@ -104,7 +104,7 @@ async function queryCallCenterEmergencia ( userSelection ) {
   let result = "";
 
 
-  let query = await queryCallcenter( userSelection, 'EMERGENCIA-CALLCENTER' )
+  let query = await queryCallcenter( userSelection, 'EMERGENCIA-CALLCENTER' );
 
   try {
     let resultPre = await pool.callCenterEmergencia.query( query );
@@ -121,7 +121,7 @@ async function queryCallCenterAps ( userSelection ) {
   let result = "";
 
 
-  let query = await queryCallcenter( userSelection, 'APS-CALLCENTER' )
+  let query = await queryCallcenter( userSelection, 'APS-CALLCENTER' );
 
 
   try {
@@ -138,7 +138,7 @@ async function queryCallCenterAmd ( userSelection ) {
 
   let result = "";
 
-  let query = await queryCallcenter( userSelection, 'AMD-CALLCENTER' )
+  let query = await queryCallcenter( userSelection, 'AMD-CALLCENTER' );
 
   try {
     let resultPre = await pool.callCenterAmd.query( query );
@@ -153,8 +153,8 @@ async function queryCallCenterAmd ( userSelection ) {
 async function queryReports ( userSelection, host ) {
   let result = '';
 
-  let start_date = objectDateToTextDate( userSelection.start_date )
-  let end_date = objectDateToTextDate( userSelection.end_date )
+  let start_date = objectDateToTextDate( userSelection.start_date );
+  let end_date = objectDateToTextDate( userSelection.end_date );
 
   let query = `
   
@@ -180,16 +180,16 @@ async function queryReports ( userSelection, host ) {
  , (select DATE_FORMAT(min(callentry_datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN '${start_date }' and  '${ end_date }') as callentry_start_datetime
  , (select DATE_FORMAT(max(callentry_datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN '${start_date }' and '${ end_date }') as callentry_end_datetime
  
-  `
+  `;
 
-  return query
+  return query;
 }
 
 async function queryCallcenter ( userSelection, host ) {
   let result = '';
 
-  let start_date = objectDateToTextDate( userSelection.start_date )
-  let end_date = objectDateToTextDate( userSelection.end_date )
+  let start_date = objectDateToTextDate( userSelection.start_date );
+  let end_date = objectDateToTextDate( userSelection.end_date );
 
   let query = `
   
@@ -214,7 +214,7 @@ async function queryCallcenter ( userSelection, host ) {
 , (select max(id) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN  '${start_date }' and   '${ end_date }') as callentry_max
 , (select min(datetime_entry_queue) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN '${start_date }' and  '${ end_date }') as callentry_min_calldate
 , (select max(datetime_entry_queue) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN '${start_date }' and '${ end_date }') as callentry_max_calldate
-  `
+  `;
 
-  return query
+  return query;
 }
