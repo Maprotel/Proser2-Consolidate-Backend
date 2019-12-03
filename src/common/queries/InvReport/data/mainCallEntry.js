@@ -12,7 +12,7 @@ import {
 
 import {
   objectDateToTextDate
-} from '../../../functions/dateFunctions'
+} from '../../../functions/dateFunctions';
 
 /******************************************************************** */
 
@@ -39,7 +39,7 @@ async function queryCallEntryEmergencia ( userSelection ) {
   let result = "";
 
 
-  let query = await queryMainCallEntry( userSelection, 'EMERGENCIA' )
+  let query = await queryMainCallEntry( userSelection, 'EMERGENCIA' );
   // console.log( 'query', query );
 
 
@@ -59,7 +59,7 @@ async function queryCallEntryAps ( userSelection ) {
   let result = "";
 
 
-  let query = await queryMainCallEntry( userSelection, 'A.P.S.' )
+  let query = await queryMainCallEntry( userSelection, 'A.P.S.' );
   // console.log( 'query', query );
 
   try {
@@ -78,7 +78,7 @@ async function queryCallEntryAmd ( userSelection ) {
   let result = "";
 
 
-  let query = await queryMainCallEntry( userSelection, 'AMD' )
+  let query = await queryMainCallEntry( userSelection, 'AMD' );
   // console.log( 'query', query );
 
   try {
@@ -95,8 +95,8 @@ async function queryCallEntryAmd ( userSelection ) {
 
 async function queryMainCallEntry ( userSelection, host ) {
 
-  let start_date = objectDateToTextDate( userSelection.start_date )
-  let end_date = objectDateToTextDate( userSelection.end_date )
+  let start_date = objectDateToTextDate( userSelection.start_date );
+  let end_date = objectDateToTextDate( userSelection.end_date );
 
 
 
@@ -164,5 +164,5 @@ async function queryMainCallEntry ( userSelection, host ) {
     CAST(callentry_datetime_entry_queue AS DATE) BETWEEN '${start_date }' AND '${ end_date }'
   `;
 
-  return query
+  return query;
 }
