@@ -18,16 +18,42 @@ import {
 
 export async function mainCallEntryReport ( userSelection ) {
   let array = [];
-  let CallEntryEmergencia = await queryCallEntryEmergencia( userSelection );
-  let CallEntryAps = await queryCallEntryAps( userSelection );
-  let CallEntryAmd = await queryCallEntryAmd( userSelection );
+  // let CallEntryEmergencia;
+  // let CallEntryAps;
+  // let CallEntryAmd;
 
-  let result = _.concat(
-    array,
+  // Promise.all( [
+  //   queryCallEntryEmergencia( userSelection ),
+  //   queryCallEntryAps( userSelection ),
+  //   queryCallEntryAmd( userSelection ) ] )
+  //   .then( ( values ) => {
+  //     CallEntryEmergencia = ( values[ 0 ] );
+  //     CallEntryAps = ( values[ 1 ] );
+  //     CallEntryAmd = ( values[ 2 ] );
+  //   } );
+
+
+  let CallEntryEmergencia = await queryCallEntryEmergencia( userSelection );
+  console.log( 'Emergencia' );
+
+  let CallEntryAps = await queryCallEntryAps( userSelection );
+  console.log( 'Aps' );
+
+  let CallEntryAmd = await queryCallEntryAmd( userSelection );
+  console.log( 'Amd' );
+
+  // let result = _.concat(
+  //   array,
+  //   CallEntryEmergencia,
+  //   CallEntryAps,
+  //   CallEntryAmd
+  // );
+
+  let result = {
     CallEntryEmergencia,
     CallEntryAps,
     CallEntryAmd
-  );
+  };
 
   return result;
 
@@ -45,7 +71,8 @@ async function queryCallEntryEmergencia ( userSelection ) {
 
   try {
     let resultPre = await pool.reportsEmergencia.query( query );
-    result = resultPre;
+    // result = resultPre;
+    return resultPre
   } catch ( error ) {
     result = { error: error };
   }
@@ -64,7 +91,8 @@ async function queryCallEntryAps ( userSelection ) {
 
   try {
     let resultPre = await pool.reportsAps.query( query );
-    result = resultPre;
+    // result = resultPre;
+    return resultPre
   } catch ( error ) {
     result = { error: error };
   }
@@ -83,7 +111,8 @@ async function queryCallEntryAmd ( userSelection ) {
 
   try {
     let resultPre = await pool.reportsAmd.query( query );
-    result = resultPre;
+    // result = resultPre;
+    return resultPre
   } catch ( error ) {
     result = { error: error };
   }

@@ -3,6 +3,7 @@
 import * as mainCallEntry from "../queries/InvReport/data/mainCallEntry";
 import * as mainStats from "../queries/InvReport/data/mainStats";
 import * as auditCallEntry from "../queries/InvReport/audit/auditCallEntry";
+import * as ping from "../queries/InvReport/data/ping";
 
 
 
@@ -50,6 +51,21 @@ module.exports = function ( InvReport ) {
     accepts: {
       arg: "userSelection",
       type: "UserSelection",
+      http: { source: "body" }
+    },
+    returns: { type: "array", root: "true" },
+    description: [ "Returns main Stats Report" ]
+  } );
+
+
+  InvReport.ping = async function () {
+    return ping.ping();
+  };
+
+  InvReport.remoteMethod( "ping", {
+    accepts: {
+      arg: "",
+      type: "",
       http: { source: "body" }
     },
     returns: { type: "array", root: "true" },
