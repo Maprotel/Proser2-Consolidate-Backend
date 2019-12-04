@@ -10,9 +10,9 @@ const mysql = require( `mysql` );
 // REPORTS
 const destinyConsolidate = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
   host: process.env.CONSOLIDATE_DB_HOST,
   user: process.env.CONSOLIDATE_DB_USER,
   password: process.env.CONSOLIDATE_DB_PASSWORD,
@@ -25,10 +25,10 @@ const destinyConsolidate = mysql.createPool( {
 // REPORTS EMERGENCIA
 const reportsEmergencia = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host:  process.env.REPORTS_HOST_EMERGENCIA,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
+  host: process.env.REPORTS_HOST_EMERGENCIA,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
   database: process.env.REPORTS_DB_EMERGENCIA,
@@ -40,13 +40,13 @@ const reportsEmergencia = mysql.createPool( {
 // REPORTS APS
 const reportsAps = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host:  process.env.REPORTS_HOST_APS,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
+  host: process.env.REPORTS_HOST_APS,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
-  database:  process.env.REPORTS_DB_APS,
+  database: process.env.REPORTS_DB_APS,
   multipleStatements: true,
   max_statement_time: 20,
   connectionName: "reportsAps"
@@ -55,10 +55,10 @@ const reportsAps = mysql.createPool( {
 // REPORTS AMD
 const reportsAmd = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host:  process.env.REPORTS_HOST_AMD,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
+  host: process.env.REPORTS_HOST_AMD,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
   database: process.env.REPORTS_DB_AMD,
@@ -70,10 +70,10 @@ const reportsAmd = mysql.createPool( {
 // CALL CENTER EMERGENCIA
 const callCenterEmergencia = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host:  process.env.CALLCENTER_HOST_EMERGENCIA,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
+  host: process.env.CALLCENTER_HOST_EMERGENCIA,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
   database: process.env.CALLCENTER_DB_EMERGENCIA,
@@ -85,9 +85,9 @@ const callCenterEmergencia = mysql.createPool( {
 // CALL CENTER APS
 const callCenterAps = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
   host: process.env.CALLCENTER_HOST_APS,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
@@ -100,10 +100,10 @@ const callCenterAps = mysql.createPool( {
 // CALL CENTER AMD
 const callCenterAmd = mysql.createPool( {
   connectionLimit: 100,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host:  process.env.CALLCENTER_HOST_AMD,
+  connectTimeout: 60 * 60 * 10000,
+  acquireTimeout: 60 * 60 * 10000,
+  timeout: 60 * 60 * 10000,
+  host: process.env.CALLCENTER_HOST_AMD,
   user: process.env.READ_ONLY_USER,
   password: process.env.READ_ONLY_PASSWORD,
   database: process.env.CALLCENTER_DB_AMD,

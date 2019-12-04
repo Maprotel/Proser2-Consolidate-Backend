@@ -1,5 +1,6 @@
 import * as pool from "../../../../connectors/pool";
 import _ from "lodash";
+import fs from "fs";
 
 
 // import userSelectionFilters from "../../InvMenu/userSelection/userSelectionFilters";
@@ -25,13 +26,30 @@ export async function mainCallEntryReport ( userSelection ) {
   let CallEntryAps = await queryCallEntryAps( userSelection );
   let CallEntryAmd = await queryCallEntryAmd( userSelection );
 
-  let result = {
+  let res = {
     CallEntryEmergencia,
     CallEntryAps,
     CallEntryAmd
   };
 
-  return result;
+  let rows = _.concat(
+    array,
+    res.CallEntryEmergencia,
+    res.CallEntryAps,
+    res.CallEntryAmd
+  );
+
+  // console.log( 'RESULT', rows.length );
+  // let path = `${ process.env.DESTINY_FILE_PUBLIC }RESULTADO.txt`;
+  // fs.writeFile( path, JSON.stringify( rows ), function ( err ) {
+  //   if ( err ) {
+  //     return console.log( err );
+  //   }
+  //   console.log( "The file was saved!" );
+  // } );
+
+  console.log( '------------------' );
+  return res;
 
 }
 
@@ -44,7 +62,16 @@ export async function queryCallEntryEmergencia ( userSelection ) {
 
   try {
     let resultPre = await pool.reportsEmergencia.query( query );
-    console.log( 'Emergencia' );
+
+    console.log( 'Emergencia', resultPre.length );
+    let path = `${ process.env.DESTINY_FILE_PUBLIC }emergencia.txt`;
+    fs.writeFile( path, JSON.stringify( resultPre ), function ( err ) {
+      if ( err ) {
+        return console.log( err );
+      }
+      console.log( "The file was saved!" );
+    } );
+
     return resultPre
   } catch ( error ) {
     result = { error: error };
@@ -62,7 +89,16 @@ async function queryCallEntryAps ( userSelection ) {
 
   try {
     let resultPre = await pool.reportsAps.query( query );
-    console.log( 'Aps' );
+    console.log( 'Aps', resultPre.length );
+    let path = `${ process.env.DESTINY_FILE_PUBLIC }aps.txt`;
+    fs.writeFile( path, JSON.stringify( resultPre ), function ( err ) {
+
+      if ( err ) {
+        return console.log( err );
+      }
+
+      console.log( "The file was saved!" );
+    } );
     return resultPre
   } catch ( error ) {
     result = { error: error };
@@ -79,7 +115,16 @@ async function queryCallEntryAmd ( userSelection ) {
 
   try {
     let resultPre = await pool.reportsAmd.query( query );
-    console.log( 'Amd' );
+    console.log( 'Amd', resultPre.length );
+    let path = `${ process.env.DESTINY_FILE_PUBLIC }amd.txt`;
+    fs.writeFile( path, JSON.stringify( resultPre ), function ( err ) {
+
+      if ( err ) {
+        return console.log( err );
+      }
+
+      console.log( "The file was saved!" );
+    } );
     return resultPre
   } catch ( error ) {
     result = { error: error };
