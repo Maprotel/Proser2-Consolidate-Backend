@@ -48,5 +48,9 @@
   "InvMenu": {
     "dataSource": "proserConsolidate",
     "public": true
+  },
+  "Attachment": {
+    "dataSource": "proserConsolidate",
+    "public": true
   }
 }

@@ -1,6 +1,7 @@
 import * as pool from "../../../../connectors/pool";
 import _ from "lodash";
 
+
 // import userSelectionFilters from "../../InvMenu/userSelection/userSelectionFilters";
 
 import {
@@ -18,36 +19,11 @@ import {
 
 export async function mainCallEntryReport ( userSelection ) {
   let array = [];
-  // let CallEntryEmergencia;
-  // let CallEntryAps;
-  // let CallEntryAmd;
-
-  // Promise.all( [
-  //   queryCallEntryEmergencia( userSelection ),
-  //   queryCallEntryAps( userSelection ),
-  //   queryCallEntryAmd( userSelection ) ] )
-  //   .then( ( values ) => {
-  //     CallEntryEmergencia = ( values[ 0 ] );
-  //     CallEntryAps = ( values[ 1 ] );
-  //     CallEntryAmd = ( values[ 2 ] );
-  //   } );
 
 
   let CallEntryEmergencia = await queryCallEntryEmergencia( userSelection );
-  console.log( 'Emergencia' );
-
   let CallEntryAps = await queryCallEntryAps( userSelection );
-  console.log( 'Aps' );
-
   let CallEntryAmd = await queryCallEntryAmd( userSelection );
-  console.log( 'Amd' );
-
-  // let result = _.concat(
-  //   array,
-  //   CallEntryEmergencia,
-  //   CallEntryAps,
-  //   CallEntryAmd
-  // );
 
   let result = {
     CallEntryEmergencia,
@@ -60,18 +36,15 @@ export async function mainCallEntryReport ( userSelection ) {
 }
 
 
-async function queryCallEntryEmergencia ( userSelection ) {
+export async function queryCallEntryEmergencia ( userSelection ) {
 
   let result = "";
-
-
   let query = await queryMainCallEntry( userSelection, 'EMERGENCIA' );
-  // console.log( 'query', query );
 
 
   try {
     let resultPre = await pool.reportsEmergencia.query( query );
-    // result = resultPre;
+    console.log( 'Emergencia' );
     return resultPre
   } catch ( error ) {
     result = { error: error };
@@ -84,14 +57,12 @@ async function queryCallEntryEmergencia ( userSelection ) {
 async function queryCallEntryAps ( userSelection ) {
 
   let result = "";
-
-
   let query = await queryMainCallEntry( userSelection, 'A.P.S.' );
-  // console.log( 'query', query );
+
 
   try {
     let resultPre = await pool.reportsAps.query( query );
-    // result = resultPre;
+    console.log( 'Aps' );
     return resultPre
   } catch ( error ) {
     result = { error: error };
@@ -104,14 +75,11 @@ async function queryCallEntryAps ( userSelection ) {
 async function queryCallEntryAmd ( userSelection ) {
 
   let result = "";
-
-
   let query = await queryMainCallEntry( userSelection, 'AMD' );
-  // console.log( 'query', query );
 
   try {
     let resultPre = await pool.reportsAmd.query( query );
-    // result = resultPre;
+    console.log( 'Amd' );
     return resultPre
   } catch ( error ) {
     result = { error: error };

@@ -112,77 +112,6 @@ const callCenterAmd = mysql.createPool( {
   connectionName: "callCenterAmd"
 } );
 
-// ORIGIN
-// const origin = mysql.createPool( {
-//   connectionLimit: 100,
-//   connectTimeout: 60 * 60 * 1000,
-//   acquireTimeout: 60 * 60 * 1000,
-//   timeout: 60 * 60 * 1000,
-//   host: process.env.ORIGIN_DB_HOST,
-//   user: process.env.ORIGIN_DB_USER,
-//   password: process.env.ORIGIN_DB_PASSWORD,
-//   database: process.env.ORIGIN_ASTERISK_DB,
-//   multipleStatements: true,
-//   max_statement_time: 20,
-//   connectionName: "origin"
-// } );
-
-
-
-// REPORTS
-// const originInventory = mysql.createPool( {
-//   connectionLimit: 100,
-//   connectTimeout: 60 * 60 * 1000,
-//   acquireTimeout: 60 * 60 * 1000,
-//   timeout: 60 * 60 * 1000,
-//   host: process.env.INVENTORY_DB_HOST,
-//   user: process.env.INVENTORY_DB_USER_READ,
-//   password: process.env.INVENTORY_DB_PASSWORD_READ,
-//   database: process.env.CONSOLIDATE_DATABASE,
-//   multipleStatements: true,
-//   max_statement_time: 20,
-//   connectionName: "destinyInventory"
-// } );
-
-// Ping database to check for common exception errors.
-// origin.getConnection( ( err, connection ) => {
-//   if ( err ) {
-//     if ( err.code === `PROTOCOL_CONNECTION_LOST` ) {
-//       console.error( `Database connection was closed.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ER_CON_COUNT_ERROR` ) {
-//       console.error( `Database has too many connections.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ECONNREFUSED` ) {
-//       console.error( `Database connection was refused.` );
-//       return err.code;
-//     }
-//   }
-
-//   return;
-// } );
-
-// Ping database to check for common exception errors.
-// destinyConsolidate.getConnection( ( err, connection ) => {
-//   if ( err ) {
-//     if ( err.code === `PROTOCOL_CONNECTION_LOST` ) {
-//       console.error( `Database connection was closed.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ER_CON_COUNT_ERROR` ) {
-//       console.error( `Database has too many connections.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ECONNREFUSED` ) {
-//       console.error( `Database connection was refused.` );
-//       return err.code;
-//     }
-//   }
-
-//   return;
-// } );
 
 // Ping database to check for common exception errors.
 reportsEmergencia.getConnection( ( err, connection ) => {
@@ -304,45 +233,6 @@ callCenterAmd.getConnection( ( err, connection ) => {
   return;
 } );
 
-// Ping database to check for common exception errors.
-// destinyInventory.getConnection( ( err, connection ) => {
-//   if ( err ) {
-//     if ( err.code === `PROTOCOL_CONNECTION_LOST` ) {
-//       console.error( `Database connection was closed.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ER_CON_COUNT_ERROR` ) {
-//       console.error( `Database has too many connections.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ECONNREFUSED` ) {
-//       console.error( `Database connection was refused.` );
-//       return err.code;
-//     }
-//   }
-
-//   return;
-// } );
-
-// Ping database to check for common exception errors.
-// originInventory.getConnection( ( err, connection ) => {
-//   if ( err ) {
-//     if ( err.code === `PROTOCOL_CONNECTION_LOST` ) {
-//       console.error( `Database connection was closed.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ER_CON_COUNT_ERROR` ) {
-//       console.error( `Database has too many connections.` );
-//       return err.code;
-//     }
-//     if ( err.code === `ECONNREFUSED` ) {
-//       console.error( `Database connection was refused.` );
-//       return err.code;
-//     }
-//   }
-
-//   return;
-// } );
 
 // Promisify for Node.js async/await.
 // origin.query = util.promisify( origin.query );

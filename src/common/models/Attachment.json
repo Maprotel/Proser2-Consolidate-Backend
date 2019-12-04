@@ -1,71 +1,47 @@
 {
-  "name": "HcxChange",
-  "settings": {
-    "strict": false,
-    "forceId": false,
-    "replaceOnPUT": true,
-    "idInjection": false,
-    "mysql": {
-      "schema": "system_proser",
-      "table": "HcxChange"
-    }
-  },
+  "name": "Attachment",
+  "base": "Model",
+  "idInjection": true,
   "properties": {
-    "hcx_id": {
-      "type": "string"
-    },
-    "hcx_timestamp": {
-      "type": "string"
-    },
-    "hcx_date_from": {
-      "type": "string"
-    },
-    "hcx_time_from": {
-      "type": "number"
-    },
-    "hcx_table": {
-      "type": "string"
-    },
-    "hcx_record": {
-      "type": "string"
+    "data": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "roles": {
+      "type": "hasMany",
+      "model": "Role",
+      "foreignKey": "principalId",
+      "through": "RoleMapping"
+    }
+  },
   "acls": [
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "checkIfExists"
     },
     {
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW",
-      "accessType": ["READ", "WRITE"]
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "admin",
-      "permission": "ALLOW",
-      "property": [
-        "create",
-        "deleteById",
-        "findById",
-        "find",
-        "patchAttributes",
-        "replaceById"
+      "accessType": [
+        "READ",
+        "WRITE"
       ]
     },
     {
       "principalType": "ROLE",
-      "principalId": "config",
-      "permission": "ALLOW",
-      "accessType": ["READ", "WRITE"]
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "config",
+      "principalId": "admin",
       "permission": "ALLOW",
       "property": [
         "create",
@@ -73,14 +49,45 @@
         "findById",
         "find",
         "patchAttributes",
-        "replaceById"
+        "replaceById",
+        "resetPassword",
+        "changePassword",
+        "__updateById",
+        "patch"
+      ]
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "system",
+      "permission": "ALLOW",
+      "accessType": [
+        "READ",
+        "WRITE"
+      ]
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "system",
+      "permission": "ALLOW",
+      "property": [
+        "create",
+        "deleteById",
+        "findById",
+        "find",
+        "patchAttributes",
+        "replaceById",
+        "resetPassword",
+        "changePassword"
       ]
     },
     {
       "principalType": "ROLE",
       "principalId": "develop",
       "permission": "ALLOW",
-      "accessType": ["READ", "WRITE"]
+      "accessType": [
+        "READ",
+        "WRITE"
+      ]
     },
     {
       "principalType": "ROLE",
@@ -92,7 +99,9 @@
         "findById",
         "find",
         "patchAttributes",
-        "replaceById"
+        "replaceById",
+        "resetPassword",
+        "changePassword"
       ]
     }
   ],

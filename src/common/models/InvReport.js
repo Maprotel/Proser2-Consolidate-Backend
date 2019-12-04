@@ -65,7 +65,7 @@ module.exports = function ( InvReport ) {
   InvReport.remoteMethod( "ping", {
     accepts: {
       arg: "",
-      type: "",
+      type: "any",
       http: { source: "body" }
     },
     returns: { type: "array", root: "true" },

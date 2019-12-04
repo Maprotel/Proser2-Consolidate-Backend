@@ -163,22 +163,22 @@ async function queryReports ( userSelection, host ) {
  ,  (select count(cdr_id) from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_count
  , (select min(cdr_id) from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_min
  , (select max(cdr_id) from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_max
- , (select DATE_FORMAT(min(cdr_calldate), '%Y-%m-%d %H:%i-%s') from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_start_datetime
- , (select DATE_FORMAT(max(cdr_calldate), '%Y-%m-%d %H:%i-%s') from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_end_datetime
+ , (select DATE_FORMAT(min(cdr_calldate), '%Y-%m-%d %H:%i-%s') from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_min_calldate
+ , (select DATE_FORMAT(max(cdr_calldate), '%Y-%m-%d %H:%i-%s') from MainCdr WHERE cast(cdr_calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_max_calldate
  
  
  , (select count(audit_id) from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and '${ end_date }') as audit_count
  , (select min(audit_id) from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_min
  , (select max(audit_id) from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_max
- , (select DATE_FORMAT(min(audit_datetime_init), '%Y-%m-%d %H:%i-%s') from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and '${ end_date }') as audit_start_datetime
- , (select DATE_FORMAT(max(audit_datetime_init), '%Y-%m-%d %H:%i-%s') from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_end_datetime
+ , (select DATE_FORMAT(min(audit_datetime_init), '%Y-%m-%d %H:%i-%s') from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and '${ end_date }') as audit_min_calldate
+ , (select DATE_FORMAT(max(audit_datetime_init), '%Y-%m-%d %H:%i-%s') from MainAudit WHERE cast(audit_datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_max_calldate
  
  
  , (select count(callentry_id) from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN  '${start_date }' and  '${ end_date }') as callentry_count
  , (select min(callentry_id) from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN  '${start_date }' and   '${ end_date }') as callentry_min
  , (select max(callentry_id) from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN  '${start_date }' and   '${ end_date }') as callentry_max
- , (select DATE_FORMAT(min(callentry_datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN '${start_date }' and  '${ end_date }') as callentry_start_datetime
- , (select DATE_FORMAT(max(callentry_datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN '${start_date }' and '${ end_date }') as callentry_end_datetime
+ , (select DATE_FORMAT(min(callentry_datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN '${start_date }' and  '${ end_date }') as callentry_min_calldate
+ , (select DATE_FORMAT(max(callentry_datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from MainCallEntry WHERE cast(callentry_datetime_entry_queue as date) BETWEEN '${start_date }' and '${ end_date }') as callentry_max_calldate
  
   `;
 
@@ -198,22 +198,22 @@ async function queryCallcenter ( userSelection, host ) {
 ,  (select count(id) from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_count
 , (select min(id) from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_min
 , (select max(id) from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_max
-, (select min(calldate) from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_min_calldate
-, (select max(calldate) from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_max_calldate
+, (select DATE_FORMAT(min(calldate), '%Y-%m-%d %H:%i-%s') from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_min_calldate
+, (select DATE_FORMAT(max(calldate), '%Y-%m-%d %H:%i-%s')  from asteriskcdrdb.cdr WHERE cast(calldate as date) BETWEEN '${start_date }' and  '${ end_date }') as cdr_max_calldate
 
 
 , (select count(id) from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and '${ end_date }') as audit_count
 , (select min(id) from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_min
 , (select max(id) from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_max
-, (select min(datetime_init) from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and '${ end_date }') as audit_min_calldate
-, (select max(datetime_init) from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_max_calldate
+, (select  DATE_FORMAT(min(datetime_init), '%Y-%m-%d %H:%i-%s') from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and '${ end_date }') as audit_min_calldate
+, (select DATE_FORMAT(max(datetime_init), '%Y-%m-%d %H:%i-%s')  from call_center.audit WHERE cast(datetime_init as date) BETWEEN '${start_date }' and  '${ end_date }') as audit_max_calldate
 
 
 , (select count(id) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN  '${start_date }' and  '${ end_date }') as callentry_count
 , (select min(id) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN  '${start_date }' and   '${ end_date }') as callentry_min
 , (select max(id) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN  '${start_date }' and   '${ end_date }') as callentry_max
-, (select min(datetime_entry_queue) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN '${start_date }' and  '${ end_date }') as callentry_min_calldate
-, (select max(datetime_entry_queue) from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN '${start_date }' and '${ end_date }') as callentry_max_calldate
+, (select DATE_FORMAT(min(datetime_entry_queue), '%Y-%m-%d %H:%i-%s')  from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN '${start_date }' and  '${ end_date }') as callentry_min_calldate
+, (select DATE_FORMAT(max(datetime_entry_queue), '%Y-%m-%d %H:%i-%s') from call_center.call_entry WHERE cast(datetime_entry_queue as date) BETWEEN '${start_date }' and '${ end_date }') as callentry_max_calldate
   `;
 
   return query;

@@ -14,5 +14,11 @@
     "connector": "mysql",
     "connectTimeout": 30000,
     "acquireTimeout": 20000
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./storage"
   }
 }

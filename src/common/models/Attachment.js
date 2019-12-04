@@ -3,6 +3,11 @@
 // This file is licensed under the Artistic License 2.0.
 // License text available at https://opensource.org/licenses/Artistic-2.0
 
-module.exports = function(InvCampaign) {
+// var config = require('../../server/config.json');
+// var path = require('path');
+
+import * as checkIfExists from "../queries/Userbase/checkIfExists";
+
+module.exports = function ( Attachment ) {
 
 };
