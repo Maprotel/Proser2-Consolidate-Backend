@@ -5,72 +5,64 @@ import * as mainStats from "../queries/InvReport/data/mainStats";
 import * as auditCallEntry from "../queries/InvReport/audit/auditCallEntry";
 import * as ping from "../queries/InvReport/data/ping";
 
-
-
-module.exports = function ( InvReport ) {
-
+module.exports = function(InvReport) {
   //**********************REMOTE METHOD CALLENTRY REPORT**********************/
 
-  InvReport.mainCallEntryReport = async function ( userSelection ) {
-    return mainCallEntry.mainCallEntryReport( userSelection );
+  InvReport.mainCallEntryReport = async function(userSelection) {
+    return mainCallEntry.mainCallEntryReport(userSelection);
   };
 
-  InvReport.remoteMethod( "mainCallEntryReport", {
+  InvReport.remoteMethod("mainCallEntryReport", {
     accepts: {
       arg: "userSelection",
       type: "UserSelection",
       http: { source: "body" }
     },
     returns: { type: "array", root: "true" },
-    description: [ "Returns values of callentry report" ]
-  } );
+    description: ["Returns values of callentry report"]
+  });
 
   //**********************REMOTE METHOD CALLENTRY-AUDIT REPORT**********************/
 
-  InvReport.auditCallEntryReport = async function ( userSelection ) {
-    return auditCallEntry.auditCallEntryReport( userSelection );
+  InvReport.auditCallEntryReport = async function(userSelection) {
+    return auditCallEntry.auditCallEntryReport(userSelection);
   };
 
-  InvReport.remoteMethod( "auditCallEntryReport", {
+  InvReport.remoteMethod("auditCallEntryReport", {
     accepts: {
       arg: "userSelection",
       type: "UserSelection",
       http: { source: "body" }
     },
     returns: { type: "array", root: "true" },
-    description: [ "Returns values of callentry report" ]
-  } );
+    description: ["Returns values of callentry report"]
+  });
 
-
-
-  InvReport.mainStatsReport = async function ( userSelection ) {
-    return mainStats.mainStatsReport( userSelection );
+  InvReport.mainStatsReport = async function(userSelection) {
+    return mainStats.mainStatsReport(userSelection);
   };
 
-  InvReport.remoteMethod( "mainStatsReport", {
+  InvReport.remoteMethod("mainStatsReport", {
     accepts: {
       arg: "userSelection",
       type: "UserSelection",
       http: { source: "body" }
     },
     returns: { type: "array", root: "true" },
-    description: [ "Returns main Stats Report" ]
-  } );
+    description: ["Returns main Stats Report"]
+  });
 
-
-  InvReport.ping = async function () {
+  InvReport.ping = async function() {
     return ping.ping();
   };
 
-  InvReport.remoteMethod( "ping", {
+  InvReport.remoteMethod("ping", {
     accepts: {
       arg: "",
       type: "any",
       http: { source: "body" }
     },
     returns: { type: "array", root: "true" },
-    description: [ "Returns main Stats Report" ]
-  } );
-
-
+    description: ["Returns main Stats Report"]
+  });
 };
