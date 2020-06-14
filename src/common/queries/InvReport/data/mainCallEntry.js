@@ -21,27 +21,31 @@ import { exit } from "shelljs";
 /******************************************************************** */
 
 export async function mainCallEntryReport(userSelection) {
+  // Extract dates from user selection
   let start_date = objectDateToTextDate(userSelection.start_date);
   let end_date = objectDateToTextDate(userSelection.end_date);
 
   try {
-    fs.writeFile("./test.csv", "", "utf-8", x => {
+
+    // Define file name and location
+    fs.writeFile(`${publicPath}/test.csv`, "", "utf-8", x => {
       console.log("Initialize file");
     });
 
+    // Define start date for each month
     let next_start_date = start_date;
     let next_end_date = moment(start_date)
       .endOf("month")
       .format("YYYY-MM-DD");
-
     console.log("Importando...", next_start_date, next_end_date);
 
+    // Calculating how many months are to be exported
     let amountOfMonths =
       moment(end_date).diff(moment(start_date), "months", true) + 1;
     let months = Math.trunc(amountOfMonths);
-
     console.log("months", months);
 
+    // Execute for loop for each month and append data to csv file
     for (let x = 1; x <= months; x++) {
       console.log(
         `**************************  ${x}  ******************************`
@@ -70,6 +74,8 @@ export async function mainCallEntryReport(userSelection) {
         next_start_date,
         next_end_date
       );
+
+      // Calculate next month
       next_start_date = moment(next_start_date)
         .add(1, "M")
         .startOf("month")
@@ -124,76 +130,6 @@ export async function writeDataTofile(
   await csv.toDisk("./test.csv", { append: true });
   csv = null;
   return [];
-}
-
-export async function queryCallEntryEmergencia(userSelection) {
-  let result = "";
-  let query = await queryMainCallEntry(userSelection, "EMERGENCIA");
-
-  try {
-    let resultPre = await pool.reportsEmergencia.query(query);
-
-    console.log("Emergencia", resultPre.length);
-    let path = `${process.env.DESTINY_FILE_PUBLIC}emergencia.txt`;
-    fs.writeFile(path, JSON.stringify(resultPre), function(err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("The file was saved!");
-    });
-
-    return resultPre;
-  } catch (error) {
-    result = { error: error };
-  }
-
-  return result;
-}
-
-async function queryCallEntryAps(userSelection) {
-  let result = "";
-  let query = await queryMainCallEntry(userSelection, "A.P.S.");
-
-  try {
-    let resultPre = await pool.reportsAps.query(query);
-    console.log("Aps", resultPre.length);
-    let path = `${process.env.DESTINY_FILE_PUBLIC}aps.txt`;
-    fs.writeFile(path, JSON.stringify(resultPre), function(err) {
-      if (err) {
-        return console.log(err);
-      }
-
-      console.log("The file was saved!");
-    });
-    return resultPre;
-  } catch (error) {
-    result = { error: error };
-  }
-
-  return result;
-}
-
-async function queryCallEntryAmd(userSelection) {
-  let result = "";
-  let query = await queryMainCallEntry(userSelection, "AMD");
-
-  try {
-    let resultPre = await pool.reportsAmd.query(query);
-    console.log("Amd", resultPre.length);
-    let path = `${process.env.DESTINY_FILE_PUBLIC}amd.txt`;
-    fs.writeFile(path, JSON.stringify(resultPre), function(err) {
-      if (err) {
-        return console.log(err);
-      }
-
-      console.log("The file was saved!");
-    });
-    return resultPre;
-  } catch (error) {
-    result = { error: error };
-  }
-
-  return result;
 }
 
 async function queryMainCallEntry(userSelection, host, start_date, end_date) {
