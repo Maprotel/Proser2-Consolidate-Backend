@@ -21,11 +21,11 @@
   },
   "RoleMapping": {
     "dataSource": "proserConsolidate",
-    "public": false
+    "public": true
   },
   "Role": {
     "dataSource": "proserConsolidate",
-    "public": false
+    "public": true
   },
   "Userbase": {
     "dataSource": "proserConsolidate",

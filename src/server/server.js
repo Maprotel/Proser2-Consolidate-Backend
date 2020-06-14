@@ -23,14 +23,6 @@ const hbs = exphbs.create( {
   extname: "handlebars"
 } );
 
-const ds = loopback.createDataSource( {
-  connector: require( 'loopback-component-storage' ),
-  provider: 'filesystem',
-  root: path.join( __dirname, 'storage' )
-} );
-
-const container = ds.createModel( 'container' );
-
 
 const app = ( module.exports = loopback() );
 

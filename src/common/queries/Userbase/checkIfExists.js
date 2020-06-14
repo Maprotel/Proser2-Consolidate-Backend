@@ -1,57 +1,57 @@
-// import * as pool from "../../../connectors/pool";
+import * as pool from "../../../connectors/pool";
 
-// export async function checkIfExists(user) {
-//   let result = {
-//     email: null,
-//     username: null
-//   };
+export async function checkIfExists(user) {
+  let result = {
+    email: null,
+    username: null
+  };
 
-//   let resume_error = {
-//     email: null,
-//     username: null
-//   };
+  let resume_error = {
+    email: null,
+    username: null
+  };
 
-//   let email = user.email;
-//   let username = user.username;
+  let email = user.email;
+  let username = user.username;
 
-//   let queryUsername = `
-//     SELECT
-//     username
-//       FROM
-//          Userbase
-//       WHERE
-//       username = '${username}'
-//           `;
+  let queryUsername = `
+    SELECT
+    username
+      FROM
+         Userbase
+      WHERE
+      username = '${username}'
+          `;
 
-//   try {
-//     result.username = await pool.destinyInventory.query(queryUsername);
-//   } catch (error) {
-//     resume_error.username = true;
-//     return {
-//       error: "Userbase - checkIfExists " + error
-//     };
-//   }
+  try {
+    result.username = await pool.destinyInventory.query(queryUsername);
+  } catch (error) {
+    resume_error.username = true;
+    return {
+      error: "Userbase - checkIfExists " + error
+    };
+  }
 
-//   let queryEmail = `
-//     SELECT
-//     email
-//       FROM
-//          Userbase
-//       WHERE
-//       email = '${email}'
-//           `;
+  let queryEmail = `
+    SELECT
+    email
+      FROM
+         Userbase
+      WHERE
+      email = '${email}'
+          `;
 
-//   try {
-//     result.email = await pool.destinyInventory.query(queryEmail);
-//   } catch (error) {
-//     resume_error.email = true;
-//     return {
-//       error: "Userbase - checkIfExists " + error
-//     };
-//   }
+  try {
+    result.email = await pool.destinyInventory.query(queryEmail);
+  } catch (error) {
+    resume_error.email = true;
+    return {
+      error: "Userbase - checkIfExists " + error
+    };
+  }
 
-//   result.username === null ? false : true;
-//   result.email === null ? false : true;
+  result.username === null ? false : true;
+  result.email === null ? false : true;
 
-//   return result;
-// }
+  return result;
+}
