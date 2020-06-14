@@ -4,3 +4,6 @@ dist
 dist-backend
 src/public/*.*
 src/storage/*.*
+test*.*
+test.*
+*test.*

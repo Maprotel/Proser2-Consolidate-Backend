@@ -16,114 +16,56 @@ import {
 } from "../../../functions/sqlFunctions";
 
 import { objectDateToTextDate } from "../../../functions/dateFunctions";
-import { exit } from "shelljs";
 
 /******************************************************************** */
 
 export async function mainCallEntryReport(userSelection) {
-  let start_date = objectDateToTextDate(userSelection.start_date);
-  let end_date = objectDateToTextDate(userSelection.end_date);
+  let array = [];
 
   try {
-    fs.writeFile("./test.csv", "", "utf-8", x => {
-      console.log("Initialize file");
-    });
+    let CallEntryEmergencia =  await queryCallEntryEmergencia(userSelection);
+    let CallEntryAps = []; //await queryCallEntryAps( userSelection );
+    let CallEntryAmd = []; //await queryCallEntryAmd( userSelection );
 
-    let next_start_date = start_date;
-    let next_end_date = moment(start_date)
-      .endOf("month")
-      .format("YYYY-MM-DD");
-
-    console.log("Importando...", next_start_date, next_end_date);
-
-    let amountOfMonths =
-      moment(end_date).diff(moment(start_date), "months", true) + 1;
-    let months = Math.trunc(amountOfMonths);
-
-    console.log("months", months);
-
-    for (let x = 1; x <= months; x++) {
-      console.log(
-        `**************************  ${x}  ******************************`
-      );
-      console.log("while next_start_date", next_start_date);
-      console.log("while next_end_date", next_end_date);
-      console.log("-----");
-
-      await writeDataTofile(
-        userSelection,
-        "EMERGENCIA",
-        next_start_date,
-        next_end_date
-      );
-
-      await writeDataTofile(
-        userSelection,
-        "APS",
-        next_start_date,
-        next_end_date
-      );
-
-      await writeDataTofile(
-        userSelection,
-        "AMD",
-        next_start_date,
-        next_end_date
-      );
-      next_start_date = moment(next_start_date)
-        .add(1, "M")
-        .startOf("month")
-        .format("YYYY-MM-DD");
-      next_end_date = moment(next_start_date)
-        .endOf("month")
-        .format("YYYY-MM-DD");
-    }
-    console.log("********************************************************");
-    console.log("El Fin");
-
-    return [];
+    console.log("------------------");
+    return array;
   } catch (error) {
     console.log("ERROR mainCallEntryReport", error);
     return error;
   }
 }
 
-export async function writeDataTofile(
-  userSelection,
-  call,
-  start_date,
-  end_date
-) {
-  let query;
-  let data;
-  let csv;
+export async function mainCallEntryReport2(userSelection) {
+  let array = [];
 
-  console.log("write", call, start_date, end_date);
+  let CallEntryEmergencia = await queryCallEntryEmergencia(userSelection);
+  let CallEntryAps = []; //await queryCallEntryAps( userSelection );
+  let CallEntryAmd = []; //await queryCallEntryAmd( userSelection );
 
-  query = await queryMainCallEntry(userSelection, call, start_date, end_date);
+  let res = {
+    CallEntryEmergencia,
+    CallEntryAps,
+    CallEntryAmd
+  };
 
-  if (call === "EMERGENCIA") {
-    data = await pool.reportsEmergencia.query(query);
-    console.log("------------------");
-    console.log("data", call, data.length);
-  }
+  let rows = _.concat(
+    array,
+    res.CallEntryEmergencia,
+    res.CallEntryAps,
+    res.CallEntryAmd
+  );
 
-  if (call === "APS") {
-    data = await pool.reportsAps.query(query);
-    console.log("------------------");
-    console.log("data", call, data.length);
-  }
+  // console.log( 'RESULT', rows.length );
+  // let path = `${ process.env.DESTINY_FILE_PUBLIC }RESULTADO.txt`;
+  // fs.writeFile( path, JSON.stringify( rows ), function ( err ) {
+  //   if ( err ) {
+  //     return console.log( err );
+  //   }
+  //   console.log( "The file was saved!" );
+  // } );
 
-  if (call === "AMD") {
-    data = await pool.reportsAmd.query(query);
-    console.log("------------------");
-    console.log("data", call, data.length);
-  }
-
-  csv = new ObjectsToCsv(data);
-  await csv.toDisk("./test.csv", { append: true });
-  csv = null;
-  return [];
+  console.log("------------------");
+  return res;
 }
 
 export async function queryCallEntryEmergencia(userSelection) {
@@ -196,12 +138,15 @@ async function queryCallEntryAmd(userSelection) {
   return result;
 }
 
-async function queryMainCallEntry(userSelection, host, start_date, end_date) {
+async function queryMainCallEntry(userSelection, host) {
+  let start_date = objectDateToTextDate(userSelection.start_date);
+  let end_date = objectDateToTextDate(userSelection.end_date);
+
   let query = `
   -- ---------------------------------------------------------------
   SELECT 
   
-    IF(inv_queue_number = '4001', 'FARMACIA',  (IF(inv_queue_number = '5007', 'FUNERARIA',  '${host}'))) as call_center
+    IF(inv_queue_number = '4001', 'FARMACIA',  '${host}') as call_center
   , 'Entrante' as tipo_llamada
   , IF(callentry_agent_id is not null, 'Atendida', 'Abandonada') as final_status
   
@@ -259,8 +204,6 @@ async function queryMainCallEntry(userSelection, host, start_date, end_date) {
   
   WHERE
     CAST(callentry_datetime_entry_queue AS DATE) BETWEEN '${start_date}' AND '${end_date}'
-
-   -- LIMIT 100
   `;
 
   return query;
