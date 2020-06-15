@@ -4,21 +4,37 @@ import * as mainCallEntry from "../queries/InvReport/data/mainCallEntry";
 import * as mainStats from "../queries/InvReport/data/mainStats";
 import * as auditCallEntry from "../queries/InvReport/audit/auditCallEntry";
 import * as ping from "../queries/InvReport/data/ping";
+import { cleanOldFilesFunction } from "../queries/InvReport/data/cleanOldFiles";
 
 module.exports = function(InvReport) {
   //**********************REMOTE METHOD CALLENTRY REPORT**********************/
 
-  InvReport.mainCallEntryReport = async function(userSelection) {
-    return mainCallEntry.mainCallEntryReport(userSelection);
+  InvReport.mainCallEntryReport = async function (httpReq, userSelection) {
+    httpReq.setTimeout(0);
+    return await mainCallEntry.mainCallEntryReport(userSelection);
   };
 
   InvReport.remoteMethod("mainCallEntryReport", {
-    accepts: {
-      arg: "userSelection",
-      type: "UserSelection",
-      http: { source: "body" }
-    },
+    accepts: [
+      { arg: "req", type: "object", http: { source: "req" } },
+      { arg: "userSelection", type: "UserSelection", http: { source: "body" } }
+    ],
     returns: { type: "array", root: "true" },
+    description: ["Returns values of callentry report"]
+  });
+
+  //**********************REMOTE METHOD CLEAN OLD FILES **********************/
+
+  InvReport.cleanOldFilesFunction = async function() {
+    return await cleanOldFilesFunction();
+  };
+
+  InvReport.remoteMethod("cleanOldFilesFunction", {
+    accepts: [
+      { arg: "userSelection", type: "UserSelection", http: { source: "body" } }
+    ],
+    returns: { type: "array", root: "true" },
+    http: { verb: "get" },
     description: ["Returns values of callentry report"]
   });
 

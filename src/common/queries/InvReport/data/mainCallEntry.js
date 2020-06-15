@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== `development`) {
+  require(`dotenv`).config();
+}
+
 import * as pool from "../../../../connectors/pool";
 import _ from "lodash";
 import fs from "fs";
@@ -21,14 +25,17 @@ import { exit } from "shelljs";
 /******************************************************************** */
 
 export async function mainCallEntryReport(userSelection) {
+  
   // Extract dates from user selection
   let start_date = objectDateToTextDate(userSelection.start_date);
   let end_date = objectDateToTextDate(userSelection.end_date);
+  let filePath = process.env.DESTINY_FILE_PATH;
+  let csvFilename = `consolidado_llamadas_${start_date}_${end_date}.csv`;
 
   try {
 
     // Define file name and location
-    fs.writeFile(`${publicPath}/test.csv`, "", "utf-8", x => {
+    fs.writeFile(`${filePath}${csvFilename}`, "", "utf-8", x => {
       console.log("Initialize file");
     });
 
@@ -41,12 +48,18 @@ export async function mainCallEntryReport(userSelection) {
 
     // Calculating how many months are to be exported
     let amountOfMonths =
-      moment(end_date).diff(moment(start_date), "months", true) + 1;
-    let months = Math.trunc(amountOfMonths);
-    console.log("months", months);
+      moment(end_date).diff(moment(start_date), "months", true);
+    let months = Math.round(amountOfMonths) + 1;
+    console.log("months", amountOfMonths);
 
     // Execute for loop for each month and append data to csv file
     for (let x = 1; x <= months; x++) {
+      if (amountOfMonths < 1) {
+        next_start_date = start_date;
+        next_end_date = end_date;
+      } if (x == months) {
+        next_end_date = end_date;
+      }
       console.log(
         `**************************  ${x}  ******************************`
       );
@@ -58,21 +71,27 @@ export async function mainCallEntryReport(userSelection) {
         userSelection,
         "EMERGENCIA",
         next_start_date,
-        next_end_date
+        next_end_date,
+        filePath,
+        csvFilename
       );
 
       await writeDataTofile(
         userSelection,
         "APS",
         next_start_date,
-        next_end_date
+        next_end_date,
+        filePath,
+        csvFilename
       );
 
       await writeDataTofile(
         userSelection,
         "AMD",
         next_start_date,
-        next_end_date
+        next_end_date,
+        filePath,
+        csvFilename
       );
 
       // Calculate next month
@@ -87,7 +106,7 @@ export async function mainCallEntryReport(userSelection) {
     console.log("********************************************************");
     console.log("El Fin");
 
-    return [];
+    return [csvFilename];
   } catch (error) {
     console.log("ERROR mainCallEntryReport", error);
     return error;
@@ -98,7 +117,9 @@ export async function writeDataTofile(
   userSelection,
   call,
   start_date,
-  end_date
+  end_date,
+  filePath,
+  csvFilename
 ) {
   let query;
   let data;
@@ -127,7 +148,7 @@ export async function writeDataTofile(
   }
 
   csv = new ObjectsToCsv(data);
-  await csv.toDisk("./test.csv", { append: true });
+  await csv.toDisk(`${ filePath }${ csvFilename }`, { append: true });
   csv = null;
   return [];
 }
