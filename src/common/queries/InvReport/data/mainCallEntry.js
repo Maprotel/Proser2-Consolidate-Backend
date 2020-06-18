@@ -156,6 +156,8 @@ export async function writeDataTofile(
 async function queryMainCallEntry(userSelection, host, start_date, end_date) {
   let query = `
   -- ---------------------------------------------------------------
+  SET lc_time_names = 'es_US';
+
   SELECT 
   
     IF(inv_queue_number = '4001', 'FARMACIA',  (IF(inv_queue_number = '5007', 'FUNERARIA',  '${host}'))) as call_center
@@ -195,7 +197,7 @@ async function queryMainCallEntry(userSelection, host, start_date, end_date) {
   
   , callentry_who_hung as colgada_por
   
-  , WEEKDAY(callentry_datetime_entry_queue) + 1 as dia_sem_de_entrada_en_cola
+  , DAYNAME(callentry_datetime_entry_queue) as dia_sem_de_entrada_en_cola
   , DATE_FORMAT(callentry_datetime_entry_queue, '%Y-%u' ) as año_sem_de_entrada_en_cola
   , DATE_FORMAT(callentry_datetime_entry_queue, '%Y-%m' ) as año_mes_de_entrada_en_cola
   , DATE_FORMAT(callentry_datetime_entry_queue, '%Y-%j' ) as año_dia_de_entrada_en_cola
