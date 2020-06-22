@@ -49,7 +49,9 @@ export async function mainCallEntryReport(userSelection) {
     // Calculating how many months are to be exported
     let amountOfMonths =
       moment(end_date).diff(moment(start_date), "months", true);
-    let months = Math.round(amountOfMonths) + 1;
+    
+    let months = amountOfMonths < 1 ? Math.round(amountOfMonths) + 1 : Math.round(amountOfMonths);
+    
     console.log("months", amountOfMonths);
 
     // Execute for loop for each month and append data to csv file
@@ -135,7 +137,7 @@ export async function writeDataTofile(
     console.log("data", call, data.length);
   }
 
-  if (call === "APS") {
+  if (call === "A.P.S.") {
     data = await pool.reportsAps.query(query);
     console.log("------------------");
     console.log("data", call, data.length);
