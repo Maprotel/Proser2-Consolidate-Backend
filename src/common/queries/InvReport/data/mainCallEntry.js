@@ -78,7 +78,7 @@ export async function mainCallEntryReport(userSelection) {
 
       await writeDataTofile(
         userSelection,
-        "APS",
+        "A.P.S.",
         next_start_date,
         next_end_date,
         filePath,
@@ -156,7 +156,6 @@ export async function writeDataTofile(
 async function queryMainCallEntry(userSelection, host, start_date, end_date) {
   let query = `
   -- ---------------------------------------------------------------
-  SET lc_time_names = 'es_US';
 
   SELECT 
   
